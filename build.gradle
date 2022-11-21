@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation('io.quarkus:quarkus-jdbc-postgresql:2.14.0.Final')
+    testImplementation 'io.quarkus:quarkus-junit5:2.14.0.Final'
+    testImplementation 'io.rest-assured:rest-assured:5.2.0'
+
+    // without that you need to configure your custom json serializer
+    implementation group: 'io.quarkus', name: 'quarkus-resteasy-jackson', version: '2.14.1.Final'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    annotationProcessor('io.quarkus:quarkus-panache-common:2.14.0.Final')
+    implementation('io.quarkus:quarkus-hibernate-orm-panache:2.14.0.Final')
+    implementation 'io.quarkus:quarkus-arc:2.14.0.Final'
+}
+
+group 'com.gara'
+version '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
